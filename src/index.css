@@ -1,0 +1,29 @@
+.login {
+  display: flex;
+  background-image: url("./components/image/background.jpg");
+  background-repeat: no-repeat;
+
+  background-size: cover;
+
+  background-position: center;
+  justify-content: center;
+
+  align-items: center;
+
+  height: 100vh;
+  background-color: black;
+  margin: 0;
+}
+.form {
+  backdrop-filter: blur(25px);
+}
+input[type="file"] {
+  display: none;
+}
+.btn {
+  background-image: linear-gradient(
+    to right,
+    #06172a, #1e2e3f, #374554 ,#505c69, #69737f, #828b94, #9ba2a9 ,#b4b9bf ,#cdd0d4,
+      #e6e7e9 ,#ffffff
+  );
+}
