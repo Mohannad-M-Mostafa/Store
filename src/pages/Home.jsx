@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Row, Form, Button } from "react-bootstrap";
 import storeItems from "../data/items.json";
-import StoreItem from "./StoreItem";
+import StoreItem from "../components/StoreItem";
 
 const Home = () => {
   return (
