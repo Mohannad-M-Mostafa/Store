@@ -1,31 +1,28 @@
 import React from "react";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { Col, Row, Form, Button } from "react-bootstrap";
+import API from "../api";
 import storeItems from "../data/items.json";
 import StoreItem from "../components/StoreItem";
-import Pagination from 'react-bootstrap/Pagination';
+import Pagination from "react-bootstrap/Pagination";
 
 const feax = async () => {
-  const m = await axios.get(
-    "https://graduation-project-tez6uftvsa-ew.a.run.app/users/company/",
-    { headers: { "Authorization": "token c53c97ca356a1a5bc60bddd62893b4d15d448d7e"} }
-  );
-  console.log(m)
-}
+  const m = await API.get("/users/company/");
+  console.log(m);
+};
 const Home = () => {
- const [posts, setposts] = useState([]);
- //const [id, setid] = useState();
+  const [posts, setposts] = useState([]);
+  //const [id, setid] = useState();
   useEffect(() => {
     feax();
-    axios
-      .get("https://graduation-project-tez6uftvsa-ew.a.run.app/users")
-      .then((response) => {setposts(response.data);
+    API.get("/users/company/")
+      .then((response) => {
+        setposts(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  });
+  }, []);
 
   /*
 //Sal timer
@@ -48,7 +45,11 @@ const Home = () => {
 */
   return (
     <>
-      <ul>{posts.map((posts) => (<li>{posts.title}</li>))} </ul>
+      <ul>
+        {posts?.map((posts) => (
+          <li>{posts.title}</li>
+        ))}{" "}
+      </ul>
       <h1>
         There are offers and discounts of up to 75%{" "}
         <spam>for a limited time</spam>
@@ -59,7 +60,11 @@ const Home = () => {
       </p>
       <Row className="mb-4">
         <Col>
-          <Form.Control type="text" placeholder="Search" className=" mr-sm-20"/>
+          <Form.Control
+            type="text"
+            placeholder="Search"
+            className=" mr-sm-20"
+          />
         </Col>
         <Col>
           <Button variant="outline-info">Submit</Button>
@@ -70,12 +75,20 @@ const Home = () => {
         in exchanging commercial goods between institutions
       </p>
       <Row className="mb-4">
-        <Col><div className="timer"><h3>Flash Sales</h3></div></Col>
+        <Col>
+          <div className="timer">
+            <h3>Flash Sales</h3>
+          </div>
+        </Col>
       </Row>
       <h4>Category</h4>
       <Row className="mb-4">
-        <Col><h4>top search Related items in all section </h4> </Col>
-        <Col xs="auto"><Button variant="outline-info">View All</Button></Col>
+        <Col>
+          <h4>top search Related items in all section </h4>{" "}
+        </Col>
+        <Col xs="auto">
+          <Button variant="outline-info">View All</Button>
+        </Col>
       </Row>
       <Row md={3} xs={2} lg={4} className="g-3">
         {storeItems.map(
@@ -88,45 +101,16 @@ const Home = () => {
           )
         )}
       </Row>
-
       <br /> <br />
       <Row className="mb-4">
-        <Col><h4>top search Related items similar suggestions</h4> </Col>
-        <Col xs="auto"> <Button variant="outline-info">View All</Button></Col>
+        <Col>
+          <h4>top search Related items similar suggestions</h4>{" "}
+        </Col>
+        <Col xs="auto">
+          {" "}
+          <Button variant="outline-info">View All</Button>
+        </Col>
       </Row>
-
-      <Row md={3} xs={2} lg={4} className="g-3">
-        {storeItems.map(
-          (
-            item //loop for card
-          ) => (<Col key={item.id}><StoreItem {...item} />
-            </Col> //js object spread operatorso
-          )
-        )}
-      </Row>
-      <br />
-      <br />
-      <Row className="mb-4">
-        <Col> <h4>top search Related items similar suggestions</h4></Col>
-        <Col xs="auto"> <Button variant="outline-info">View All</Button> </Col>
-      </Row>
-
-      <Row md={3} xs={2} lg={4} className="g-3">
-        {storeItems.map(
-          (
-            item //loop for card
-          ) => (
-            <Col key={item.id}>
-              <StoreItem {...item} /> </Col> //js object spread operatorso
-          )
-        )}
-      </Row>
-      <br /> <br />
-      <Row className="mb-4">
-        <Col> <h4>top search Related items similar suggestions</h4> </Col>
-        <Col xs="auto"> <Button variant="outline-info">View All</Button></Col>
-      </Row>
-
       <Row md={3} xs={2} lg={4} className="g-3">
         {storeItems.map(
           (
@@ -141,22 +125,71 @@ const Home = () => {
       <br />
       <br />
       <Row className="mb-4">
-        <Col><h4>top search Related items similar suggestions</h4> </Col>
-        <Col xs="auto"> <Button variant="outline-info">View All</Button></Col>
+        <Col>
+          {" "}
+          <h4>top search Related items similar suggestions</h4>
+        </Col>
+        <Col xs="auto">
+          {" "}
+          <Button variant="outline-info">View All</Button>{" "}
+        </Col>
       </Row>
-
       <Row md={3} xs={2} lg={4} className="g-3">
         {storeItems.map(
           (
             item //loop for card
           ) => (
             <Col key={item.id}>
-              <StoreItem {...item} /> </Col> //js object spread operatorso
+              <StoreItem {...item} />{" "}
+            </Col> //js object spread operatorso
+          )
+        )}
+      </Row>
+      <br /> <br />
+      <Row className="mb-4">
+        <Col>
+          {" "}
+          <h4>top search Related items similar suggestions</h4>{" "}
+        </Col>
+        <Col xs="auto">
+          {" "}
+          <Button variant="outline-info">View All</Button>
+        </Col>
+      </Row>
+      <Row md={3} xs={2} lg={4} className="g-3">
+        {storeItems.map(
+          (
+            item //loop for card
+          ) => (
+            <Col key={item.id}>
+              <StoreItem {...item} />
+            </Col> //js object spread operatorso
           )
         )}
       </Row>
       <br />
-
+      <br />
+      <Row className="mb-4">
+        <Col>
+          <h4>top search Related items similar suggestions</h4>{" "}
+        </Col>
+        <Col xs="auto">
+          {" "}
+          <Button variant="outline-info">View All</Button>
+        </Col>
+      </Row>
+      <Row md={3} xs={2} lg={4} className="g-3">
+        {storeItems.map(
+          (
+            item //loop for card
+          ) => (
+            <Col key={item.id}>
+              <StoreItem {...item} />{" "}
+            </Col> //js object spread operatorso
+          )
+        )}
+      </Row>
+      <br />
       <Row className="mb-10">
         <Pagination>
           <Pagination.First />
@@ -180,4 +213,4 @@ const Home = () => {
   );
 };
 
-  export default Home; 
+export default Home;
