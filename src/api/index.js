@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const baseURL = "https://graduation-project-tez6uftvsa-ew.a.run.app/";
-const baseURL = "http://127.0.0.1:8000/"; // for local testin
+const baseURL = "https://graduation-project-tez6uftvsa-ew.a.run.app/";
+// const baseURL = "http://127.0.0.1:8000/"; // for local testin
 
 const API = axios.create({
   baseURL,
