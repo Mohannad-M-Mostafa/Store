@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Cookies from "cookies-js";
 import { useNavigate } from "react-router-dom";
+import API from "../../api";
+
 const Login = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -8,26 +9,18 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await fetch(
-        "https://graduation-project-tez6uftvsa-ew.a.run.app/login/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: JSON.stringify({
-            username: email,
-            password,
-          }),
-        }
-      );
-      const content = await data.json();
-      if (content.token) {
-        Cookies.set("token", content.token);
-        navigate("/home");
-      }else{
-        alert("Something went wrong")
+      const res = await API.post("/login/", {
+        username: email,
+        password,
+      });
+
+      const token = res?.data?.token;
+
+      if (token) {
+        localStorage.setItem("token", token);
+        navigate("/");
+      } else {
+        alert("Something went wrong");
       }
     } catch (error) {
       console.log(error);
