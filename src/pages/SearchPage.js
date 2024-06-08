@@ -1,61 +1,52 @@
-import React, { useEffect } from "react";
-import "./SearchPage.scss";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { STATUS } from "../../utils/status";
-import Loader from "../../components/Loader/Loader";
-import ProductList from "../../components/ProductList/ProductList";
-import {
-  fetchAsyncSearchProduct,
-  getSearchProducts,
-  getSearchProductsStatus,
-  clearSearch,
-} from "../../store/searchSlice";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import ProductList from "./ProductList";
 
 const SearchPage = () => {
-  const dispatch = useDispatch();
-  const { searchTerm } = useParams();
-  const searchProducts = useSelector(getSearchProducts);
-  const searchProductsStatus = useSelector(getSearchProductsStatus);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchProducts, setSearchProducts] = useState([]);
+  const history = useHistory();
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
-  useEffect(() => {
-    dispatch(clearSearch());
-    dispatch(fetchAsyncSearchProduct(searchTerm));
-  }, []);
-
-  if (searchProducts.length === 0) {
-    return (
-      <div
-        className="container"
-        style={{
-          minHeight: "70vh",
-        }}
-      >
-        <div className="fw-5 text-danger py-5">
-          <h3>No Products found.</h3>
-        </div>
-      </div>
-    );
-  }
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim() !== "") {
+      setSearchProducts([]);
+      history.push(`/search/${encodeURIComponent(searchTerm)}`);
+    }
+  };
 
   return (
-    <main>
-      <div className="search-content bg-whitesmoke">
-        <div className="container">
-          <div className="py-5">
-            <div className="title-md">
-              <h3>Search results:</h3>
-            </div>
-            <br />
-            {searchProductsStatus === STATUS.LOADING ? (
-              <Loader />
-            ) : (
-              <ProductList products={searchProducts} />
-            )}
+    <div className="container">
+      <h2>Search Products</h2>
+      <form onSubmit={handleSearchSubmit}>
+        <input type="text"placeholder="Enter search term..." value={searchTerm} onChange={handleSearchChange} />
+        <button type="submit">Search</button>
+      </form>
+      {searchProducts.length === 0 ? (
+        <div className="container" style={{ minHeight: "70vh" }}>
+          <div className="fw-5 text-danger py-5">
+            <h3>No Products found.</h3>
           </div>
         </div>
-      </div>
-    </main>
+      ) : (
+        <main>
+          <div className="search-content bg-whitesmoke">
+            <div className="container">
+              <div className="py-5">
+                <div className="title-md">
+                  <h3>Search results:</h3>
+                </div>
+                <br />
+                <ProductList products={searchProducts} />
+              </div>
+            </div>
+          </div>
+        </main>
+      )}
+    </div>
   );
 };
 
